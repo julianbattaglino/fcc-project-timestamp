@@ -48,7 +48,7 @@ app.get("/api/:date_string", function (req, res) {
 
   console.log(typeof passedInValue, "<= passed in value");
   if (passedInValue == "Invalid Date") {
-    res.json({greeting: 'Invalid Date'});
+    res.json({error: 'Invalid Date'});
   } else {
     res.json({
       "unix": passedInValue.getTime(),
