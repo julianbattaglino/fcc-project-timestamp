@@ -25,7 +25,8 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/timestamp", function(req, res) {
+// Api Empty Endpoint Response Date
+app.get("/api/", function(req, res) {
   var now = new Date()
   res.json({
     "unix": now.getTime(),
@@ -33,6 +34,7 @@ app.get("/api/timestamp", function(req, res) {
   });
 });
 
+// Api Date String Endpoint Response
 app.get("/api/:date_string", function (req, res) {
   let dateString = req.params.date_string;
 
@@ -44,6 +46,7 @@ app.get("/api/:date_string", function (req, res) {
     });
   }
 
+// Api Invalid Date Endpoint Response
   let passedInValue = new Date(dateString);
 
   if (passedInValue == "Invalid Date") {
