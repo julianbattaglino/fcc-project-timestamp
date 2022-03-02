@@ -30,18 +30,17 @@ app.get("/api/timestamp", function(req, res) {
   res.json({
     "unix": now.getTime(),
     "utc": now.toUTCString()
+  });
 });
-});
-
 
 app.get("/api/:date_string", function (req, res) {
   let dateString = req.params.date_string;
 
-  if (parsedInt(dateString) > 10000) {
+  if (parseInt(dateString) > 10000) {
     let unixTime = new Date(parseInt(dateString));
     res.json({
-      "unix": passedInValue.getTime(),
-      "utc": passedInValue.toUTCString()
+      "unix": unixTime.getTime(),
+      "utc": unixTime.toUTCString()
     });
   }
 
