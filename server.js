@@ -35,7 +35,7 @@ app.get("/api/timestamp", function(req, res) {
 
 app.get("/api/:date_string", function (req, res) {
   let dateString = req.params.date_string;
-  console.log(dateString, typeof dateString, Object.keys(dateString));
+
   if (parseInt(dateString) > 10000) {
     let unixTime = new Date(parseInt(dateString));
     res.json({
@@ -46,7 +46,6 @@ app.get("/api/:date_string", function (req, res) {
 
   let passedInValue = new Date(dateString);
 
-  console.log(typeof passedInValue, "<= passed in value");
   if (passedInValue == "Invalid Date") {
     res.json({error: 'Invalid Date'});
   } else {
