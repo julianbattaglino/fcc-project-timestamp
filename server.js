@@ -21,41 +21,40 @@ app.get("/", function (req, res) {
 
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
-  console.log({greeting:'hello API'});
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/timestamp", function(req, res) {
-  var now = new Date()
-  res.json({
-    "unix": now.getTime(),
-    "utc": now.toUTCString()
-  });
-});
-
-app.get("/api/:date_string", function (req, res) {
-  let dateString = req.params.date_string;
-
-  if (parseInt(dateString) > 10000) {
-    let unixTime = new Date(parseInt(dateString));
-    res.json({
-      "unix": unixTime.getTime(),
-      "utc": unixTime.toUTCString()
-    });
+app.get('/api/timestamp/:dateString', (req, res) => {
+  const dateString = req.params.dateString;
+  // Check if parameter is number
+  if(/^\d+$/g.test(dateString)){
+    const time = parseInt(dateString, 10);
+    // if integer is below 1 return error
+    if (time < 1)
+      return res.status(400).json({error: 'Invalid Date'})
+    return res.json({
+      unix: time,
+      utc: new Date(time).toUTCString()
+    })
   }
+  // Check if date is ISO 8601 format
+  if (!isNaN(Date.parse(dateString))) {
+    const date = new Date(dateString)
+    return res.json({
+      unix: date.getTime(),
+      utc: date.toUTCString()
+    })
+  }
+  return res.status(400).json({error: 'Invalid Date'})
+})
 
-  let passedInValue = new Date(dateString);
-
-  if (passedInValue == "Invalid Date") {
-    res.json({error: 'Invalid Date'});
-  } else {
-    res.json({
-      "unix": passedInValue.getTime(),
-      "utc": passedInValue.toUTCString()
+app.get('/api/timestamp/', (req, res) => {
+  const date = new Date()
+  return res.json({
+    unix: date.getTime(),
+    utc: date.toUTCString()
   })
-}
-
-});
+})
 
 
 
