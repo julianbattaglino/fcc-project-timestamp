@@ -21,11 +21,30 @@ app.get("/", function (req, res) {
 
 // your first API endpoint... 
 app.get("/api/hello", function (req, res) {
+  console.log({greeting:'hello API'});
   res.json({greeting: 'hello API'});
 });
 
+app.get("/api/timestamp", function(req, res) {
+  var now = new Date()
+  res.json({
+    "unix": now.getTime(),
+    "utc": now.toUTCString()
+});
+});
+
+
 app.get("/api/:date_string", function (req, res) {
   let dateString = req.params.date_string;
+
+  if (parsedInt(dateString) > 10000) {
+    let unixTime = new Date(parseInt(dateString));
+    res.json({
+      "unix": passedInValue.getTime(),
+      "utc": passedInValue.toUTCString()
+    });
+  }
+
   let passedInValue = new Date(dateString);
 
   if (passedInValue == "Invalid Date") {
