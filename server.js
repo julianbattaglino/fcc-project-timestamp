@@ -46,6 +46,7 @@ app.get("/api/:date_string", function (req, res) {
 
   let passedInValue = new Date(dateString);
 
+  console.log(typeof passedInValue, "<= passed in value");
   if (passedInValue == "Invalid Date") {
     res.json({greeting: 'Invalid Date'});
   } else {
